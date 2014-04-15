@@ -1,0 +1,19 @@
+\begin{thebibliography}{MT10}
+
+\bibitem[AS00]{assym}
+Naga Alon and Joel~H. Spencer.
+\newblock {\em The probabilistic method}.
+\newblock Wiley-Interscience, New York, 2000.
+
+\bibitem[LE75]{original}
+Laszlo Lovasz and Paul Erdos.
+\newblock Problems and results on 3-chromatic hypergraphs and some related
+  questions.
+\newblock In {\em Infinite and Finite Sets}. North Holland, April 1975.
+
+\bibitem[MT10]{constructive}
+Robin~A. Moser and Gabor Tardos.
+\newblock A constructive proof of the general lovasz local lemma.
+\newblock {\em Journal of the ACM}, 57(2), 2010.
+
+\end{thebibliography}

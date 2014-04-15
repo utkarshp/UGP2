@@ -1,0 +1,41 @@
+We proved the general lovasz local lemma in both constructive and non-constructive fashion. Although the constructive proof assumed that all the events can be determined by an underlying set of mutually independent random variables, 
+this assumption is justified since it is indeed the case in almost all of the practical applications of the lemma. Here we consider two such problems: Packet routing and Job shop scheduling. The analysis of these problems appeared in \cite{srinivasan}.
+
+\section{Packet Routing}
+In computer networks, it is often the case that the optimal path for a packet from a source to destination is known beforehand and we need to route multiple packets such that there is no edge (link) that has more than one packets passing through it at any instant of time. This corresponds to the problem of packet routing.
+
+\subsection{Problem Statement}
+Given an undirected graph $G=(V,E) $, a set of $n$ packets numbered 1 through $n$ and paths$P_i$ corresponding to $i^{th}$ packet, we need to schedule the packets in such a way that for any edge $e\in E $, at any instant of time there is \emph{at most} one packet that traverses that edge in any direction. There may be multiple schedules that satisfy this constraint, of all these schedules we need to report the schedule of minimum \emph{makespan}, that is total time required for every packet to reach its destination. Here we will assume that it takes any packet a unit time to traverse any edge.
+
+For every edge $e\in E$, we define 
+$C_e := \{i| e\in P_i \} $ and for each packet $i$ we define $D_i:=\{e|e\in P_i \} $. We call congestion $c:=\max\limits_{e\in E}C_e $ and dilation $d:=\max\limits_{i\in[n]}D_i $. Clearly, we cannot have a schedule that takes lesser time than $\max\{c,d\} $. This is because every packet must traverse every edge in its corresponding path and even if all paths are disjoint the longest path packet will take time = $d$ to reach its destination. Similarly, since at any time, only one packet can traverse any particular edge at any instance, we need at least $|C_e| $ units of time for an edge $e$ to be free (that is no packet will traverse edge $e$ after this time). Hence we get a lower bound on the schedule that can exist. Here we will prove that if the paths are \emph{edge simple} then there exists a schedule of makespan $O(c+d)$. This proof appeared in \cite{jobshop}. 
+
+Note that we can also have an upper bound on the optimum schedule. we mean that there is also a brute force scheduling approach based on the greedy strategy: If at any instance, no packet is traversing on an edge $(u,v)$, and a packet needs to go from $u$ to $v$ then send the packet from $u$ to $v$. Clearly, this gives a schedule of makespan $O(cd)$.
+
+\subsection{Randomized Schedule}
+We will first produce a random schedule and then derandomize it to prove that there exists a schedule that takes $O(c+d)$ time. Let us pick a suitable number $a$, we will fix $a$ later. For every packet introduce a random delay $d_i\in\{0,1,2,\ldots ac\} $. Every packet is now scheduled to leave its source after a delay $d_i$ and then it proceeds to follow its prescribed path to reach the target without stopping anywhere. Of course this schedule may be invalid, that is, there might be some edge having more than one packet traversing it at some point of time. We need to change the schedule to suit these edges.
+
+For this we need to split the current schedule in different time frames. Note that this (possibly invalid) schedule takes time at most $ac+d$ units. We will divide this schedule in contiguous time frames of length $b\log c$ each starting at time 1, again for a suitable $b$. Our motive is to prove, using the LLL, that every edge has a congestion of at most $b\log c$ in every time frame with positive probability (i.e. such assignment of random delays exists). If this is true, then we have essentially broken the main problem down to $\frac{ac+d}{b\log c} $ subproblems. We can then proceed to solve each of these subproblems, one corresponding to each frame, and then string their solutions together to get the schedule for the original problem. Clearly, the dilation in each frame-subproblem becomes $b\log c$ and so we have (for cleaner notation, we assume that $c=d$.) :
+\begin{itemize}
+ \item $T(c) = \frac{ac}{b\log c}T(b\log c) $ where $T(c)$ denotes the makespan of the optimum schedule having congestion = dilation = $c$
+ \item $T(k) = k^2 $ where $k$ is a constant. This is from the greedy brute force schedule that always exists.
+\end{itemize}
+Solving the above recurrence, we get $T(c)= c\cdot 2^{O(\log^*(c)) } $. It is a known fact that $\log^*x \leq 6$ for all practical purposes and so we get a schedule of desired length.
+
+Now all we need to do is to prove using lovasz local lemma that there exists such an assignment of random delays to the packets so that in all of the frames, the congestion on any edge is $O(b\log c) $.
+
+\subsection{Applying LLL}
+To apply the lovasz local lemma, we need to define some undesirable events in which dependency of every event on other events is bounded. The natural choice of undesirable events here is to have a set of events $E_e$ for a frame $e$ denoting that there is some frame having congestion more than $b\log c$ on edge $e$. We need to analyze the probability $\Pr(\cap_{e} \overline{E_e}) $ and prove that it is positive.
+
+For any edge $e$ in a frame $F$, let $E'(e,F) $ be the event that the edge $e$ has a congestion $\geq b\log c $ in frame $F$. It can be seen that the random variable $C(e,F) $ counting the number of packets passing through an edge $e$ in frame $F$ has an expected value $E[C(e,F)]\leq (b\log c)\times c/ac = (b\log c)/a $ (Since a frame has length $b\log c$). If a packet traverses an edge $e$ in a particular frame $F$, it can never traverse the same edge twice. This is because of our assumption that paths are edge simple. Due to this observation, we can express $C(e,F) $ as a sum of indicator random variables each corresponding to a different packet indicating whether or not that packet traverses $e$ in frame $F$. Hence we can apply chernoff bound and union bound to get:
+
+\begin{equation*}
+\begin{align}
+ \Pr[E_e] \leq \sum_F \Pr(E'(e,F)) &= \sum_F\Pr\left(C(e,F) \geq a\times \frac{b\log c}{a} \right)\\
+ & \leq \frac{ac+d}{b\log c} \times \frac{e^{\frac{ab\log \frac{c}{e}}{a} } }{(ab\log c)^{\frac{ab\log c}{a} }} \\
+\end{align}
+\end{equation*}
+
+
+
+

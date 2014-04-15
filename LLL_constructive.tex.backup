@@ -1,0 +1,228 @@
+
+
+
+\section{Lemma statement}
+The asymmetric lovasz local lemma \cite{original} states the following:
+\begin{theorem}
+\label{lll}
+ Let $\mathbb{A}$ be a finite set of events in a probability space. For $A\in \mathbb{A}$ let $\Gamma(A)\subset \mathbb{A} $ such that $A$ is independent from the collection of events $A\setminus (\{A\}\cup\Gamma(A) ) $. If $\exists x:\mathbb{A} \longrightarrow (0,1): $
+ \[
+    \forall A\in \mathbb{A} : \Pr[A] \leq x(A) \prod\limits_{B\in\Gamma(A) }(1-x(B) )
+ \]
+ then
+ \[
+    \Pr(\cap_{A\in\mathbb{A}}\overline{A} ) \geq \prod\limits_{A\in\mathbb{A}}(1-x(A) )
+ \]
+ In particular, the probability is positive
+\end{theorem}
+First we study the non-constructive proof of theorem \ref{lll} given in \cite{assym}
+
+\section[Non-constructive Proof]{Non-constructive Proof\footnote{The same proof has been added by me in the wikipedia article of Lovasz Local Lemma (\text{https://en.wikipedia.org/wiki/Lovasz\_Local\_Lemma}) under the username Uspatange on $31^{st}$ March 2014 }}
+We prove the asymmetric version of the Lemma. By using the principle of mathematical induction we prove that $ \Pr\left(A|\cap_{B \in S}\overline{B}\right)\leq x\left(A\right) \forall S \subset \mathcal{A}, A \not\in S $. The induction here is applied on the size (cardinality) of the set $ S $. For base case $S=\phi$ the statement obviously holds since $ \Pr\left(A_i\right) \leq x\left(A_i\right) $. We need to show that the inequality holds for any subset of $\mathcal{A} $ of a certain cardinality given that it holds for all subsets of a lower cardinality.
+
+Let $S_{1} = S\cap \Gamma(A), S_{2} = {{S \smallsetminus S_{1}}}$. We have from Bayes' theorem
+
+\[
+\Pr\left(A|\cap_{B\in S} \overline{B}\right) = \frac{\Pr\left(A\cap\cap_{B\in S_{1}} \overline{B}| \cap_{B\in S_{2}} \overline{B}\right)}{\Pr\left(\cap_{B\in S_{1}}\overline{B}|\cap_{B\in S_{2}} \overline{B} \right)}  \]
+
+We bound the numerator and denominator of the above expression separately. For this, let $ S_{1}=\{B_{j1},B_{j2},\ldots,B_{jl}\} $. First, exploiting the fact that $A$ does not depend upon any event in $ S_{2} $.
+
+\begin{equation}
+\begin{split}
+ Numerator & \leq \Pr\left(A|\cap_{B\in S_{2}} \overline{B}\right) \\
+ & = \Pr(A) \leq x(A) \prod\limits_{B\in\Gamma(A)}\left(1-x(B)\right)
+ \label{numer}
+\end{split}
+\end{equation}
+
+
+
+Expanding the denominator by using Bayes' theorem and then using the inductive assumption, we get
+
+\begin{equation}
+\begin{split}
+\label{denom}
+ Denominator &= \Pr\left(\overline{B}_{j1}|\cap_{t=2}^l \overline{B}_{jt}\cap_{B\in S_{2}} \overline{B} \right)\cdot \Pr\left(\overline{B}_{j2}|\cap_{t=3}^l\overline{B}_{jt}\cap_{B\in S_{2}} \overline{B} \right)\cdot \ldots \\
+ &\ldots \cdot \Pr\left(\overline{B}_{jl}|\cap_{B\in S_{2}} \overline{B} \right) \\
+ & \geq \prod\limits_{B\in S_{1}} \left(1-x(B)\right) 
+\end{split}
+\end{equation}
+
+
+The inductive assumption can be applied here since each event is conditioned on lesser number of other events, i.e. on a subset of cardinality less than $|S|$. From equations \ref{numer} and \ref{denom}, we get
+
+\[ 
+\Pr\left(A|\cap_{B\in S} \overline{B}\right) \leq x(A)\prod\limits_{B\in \Gamma(A)-S_{1}}(1-x(B)) \leq x(A)  \]
+
+Since value of x is always in (0,1). Note that we have essentially proved $ \Pr\left(\overline{A}|\cap_{B\in S} \overline{B}\right) \geq 1-x(A) $. To get the desired probability, we write it in terms of conditional probabilities applying Bayes' theorem repeatedly. Hence,
+
+\[ 
+\Pr\left(\overline{A_1} \cap \ldots \cap \overline{A_n} \right) = \Pr\left(\overline{A_1}|\overline{A_{2}}\cap \ldots \overline{A_{n}}\right)\cdot\Pr\left(\overline{A_2}|\overline{A_{3}}\cap \ldots \overline{A_{n}}\right)\cdot \ldots \cdot \Pr\left(\overline{A_{n}}\right) \leq \prod\limits_{A\in\mathcal{A}}(1-x(A)) 
+\]
+Which is what we had intended to prove.
+
+\section{Constructive Proof}
+The proof stated above doesn't give a way to find such a setting in which none of the undesirable events happen. Now
+we study a constructive proof for theorem \ref{lll} given in \cite{constructive}. The proof given here asumes certain things about the nature of the events and gives a randomized algorithm with an expected bound on the running time that gives a way to find such a setting.
+\section{Assumptions and Terms Used}
+To get an algorithmic access to the problem, we assume that all the events can be determined by some subset of a finite collection of mutually independent random variables in a fixed probability space. This indeed is the case in almost all known applications of the Lovasz Local Lemma.
+
+Terms used:
+\begin{enumerate} \itemsep -2pt
+ \item $\Omega :=$ A fixed probability space
+ \item $\mathbb{P}$ := Set of mutually independent random variables in $\Omega$
+ \item $\mathbb{A} :=$ Set of events determined by some $S\subseteq\mathbb{P} $
+ \item An evaluation of variables in S \emph{violates} $A\in\mathbb{A} $ if it makes $A$ happen
+ \item $vbl(A) :=$ The unique minimal $S\subseteq\mathbb{P} $ that determines $A$
+ \item $G_\mathbb{A}(Dependency\,\, Graph) := (\mathbb{A},E) $ where $E$ is a set of undirected edges and $(A,B)\in E $ if $A\neq B, vbl(A)\cap vbl(B) \neq \phi $
+ \item $\Gamma(A):=\Gamma_\mathbb{A}(A) $ is the neighborhood of $A$ in $G$
+ \item $\Gamma^+(A):=\Gamma(A)\cup\{A\} $
+\end{enumerate}
+Given the family $\mathbb{A}$, we need to find an algorithm to efficiently find such an evaluation that does not violate any of the events $A\in\mathbb{A}$
+
+\section{Pseudo Code}
+\begin{algorithm}[H]
+\label{algo}
+\For  {$P \in \mathbb{P}$} {
+  $v_P \leftarrow$ a random evaluation of $P$ }
+\While {$\exists A \in \mathbb{A} : A$ is violated when $(P = v_P : \forall P \in \mathbb{P})$} {
+  pick an arbitrary violated event $A \in \mathbb{A}$\\
+    \For{$P \in vbl(A)$}  {
+    $v_P \leftarrow $ a new random evaluation of $P$
+    }
+  }
+return ($v_P )_{P\in \mathbb{P}}$
+
+ \caption{lllfind}
+\end{algorithm}
+It is obvious that if algorithm \ref{algo} terminates, it would have definitely found the required evaluation of the random variables. We need to prove that this algorithm not only terminates, but it terminates quickly i.e. there is some bound on the number of iterations.
+
+We will prove that the randomized algorithm \ref{algo} resamples and event $A \in \mathbb{A}$ at most an expected $x(A)/(1-x(A) ) $ times before it terminates. For this purpose, we use the concept of Witness Trees and Execution Logs.
+
+\section{Execution Logs and Witness Trees}
+Let's say we fix the method to choose the next event that is to be resampled among all of the events that are violated during an iteration. Let the sequence in which we resample the events be $C$ called an execution log. That is, $C$ is a sequence in which the $t^{th}$ entry is the event that is sampled in the $t^{th} $ step. Thus $C$ now depends entirely upon the random evaluations of the different random variables in $\mathbb{P}$.
+
+A witness tree $\tau$ is a finite rooted tree each of whose vertices are labeled by an event from $\mathbb{A}$. We will denote label of a vertex $v$ by $[v] $ and the set of vertices by $V(\tau)$. Each children of a vertex $u$ must receive labels from $\Gamma^+([u] ) $. We call $\tau$ a proper witness tree if all siblings have distinct labels.
+
+We associate a witness tree with each step of the log. The intuition is that the witness tree will \emph{justify} the resampling done in that step. For a log $C$ we define $\tau_C(t) $ for each step $t$ in $C$. We will construct $\tau_C(t) $ incrementally as follows:\\
+\begin{algorithm}[H]
+\label{construct}
+  $\tau_C^{(t)}(t) \leftarrow $  an isolated vertex labeled $C(t)$ \\
+  \For {$i\leftarrow t-1$ to 1} {
+     $\rho_i \leftarrow \{v\in \tau_C^{(i+1)}(t)| C(i)\in \Gamma^+([v] )\} $ \\
+     $\tau_C^{(i+1)}=\tau_C^{(i)} $ \\
+     \If {$\rho_i <> \phi$} {
+     $v \leftarrow$ a vertex in $\rho_i$ that is farthest from root\\
+     $u \leftarrow$ new vertex \\
+     $[u] \leftarrow C(i)$ \\
+     $child_{i+1}(v) \leftarrow child_i(v)\cup u$
+     }
+  $\tau_C(t)\leftarrow \tau_C^{(1)}(t) $\\
+  return $\tau_C(t)$
+  }
+\caption{Construct ($C,t$)}
+\end{algorithm}
+Due to the second step in the construction, we can say that no two vertices having labels that are dependent on each other can ever be siblings. This also proves that any witness tree $\tau_C(t)$ will be proper for any log $C$ and step $t$ in $C$. 
+
+We say that a witness tree $\tau$ appears in a log $C$ if for some step $t$ $\tau=\tau_C(t)$.
+
+\begin{theorem}
+\label{proper}
+ Let $\tau$ be a fixed witness tree and  C the (random) log produced by algorithm \ref{algo}. Then,
+ \begin{enumerate}
+  \item If $\tau$ appears in C, then $\tau $ is not only proper, but $\tau$ has mutually independent labels at each depth.
+  \item The probability that $\tau$ appears in C is at most $\prod\limits_{v\in V(\tau)}\Pr([v]) $
+ \end{enumerate}
+\end{theorem}
+
+\proof Let us assume $\tau = \tau_C(t)$ for some step $t$. For a vertex $v\in  V(\tau )$ we define:
+\begin{enumerate} \itemsep -2pt
+ \item $d(v) := $ Distance from root to $v$, also called depth of $v$
+ \item $q(v) := \max\limits_{i\leq t}\{i|v\in V(\tau_C^{i}(t))\} $. That is $q(v) > q(u)$ means that $v$ was added to $\tau$ earlier than $u$ in algorithm \ref{construct}
+\end{enumerate}
+
+Note that $q(v)> q(u) $ and $[u]\in \Gamma^+(v) $ means $u$ must be added to the tree at a position farther from root than $v$ as per algorihm \ref{construct}. That is, $d(u) > d(v) $. This implies, among other things, that $\tau$ must be proper.
+
+We define a procedure called $\tau-$check to prove the 2nd result in theorem \ref{proper}. We say $\tau$ passes the check if check$(\tau)$ returns true.
+
+\begin{algorithm}[H]
+ \label{check}
+ $S \leftarrow$ Sequence of vertices in the reverse order of their being visited in BFS traversal \\
+ pass $\leftarrow true$ \\
+ \For {$i$ in 1 to $|V(\tau)|$ } {
+	$v\leftarrow S_i $\\
+	P $\leftarrow vbl([v]) $ \\
+	$v_P \leftarrow $ random evaluation of variables in $P$ \\
+	\If{$v_P$ \emph{does not} violates $[v]$} {
+	    pass $\leftarrow false$ \\
+	    }
+	  }
+ return pass
+ \caption{check($\tau$)}
+\end{algorithm}
+It is obvious from algorithm \ref{check} that $\Pr(\tau \text{ passes } \tau-\text{check}) = \prod_{v\in V(\tau) }\Pr([v]) $. To link the $\tau-$check with the log, we assume that both of them are run on same set of random sources. We will formalize this definition shortly. If we prove that whenever $\tau$ appears in $C$, it passes the check on the same random source, then we have proved the lemma. This follows from Bayes' theorem.
+
+Let $E_1 :=$ event that $\tau\text{ appears in }C$ and $E_2 := \text{check}(\tau) \text{ passes}$. Assuming $E_1$ implies $E_2$ (so, $\Pr(E_2|E_1)=1$) We get,
+
+\begin{align*}
+ \Pr(E_2 | E_1)\cdot \Pr(E_1) & = \Pr(E_1|E_2)\cdot\Pr(E_2)\\
+ \therefore\Pr(E_1) & \leq \Pr(E_2) \\
+ & = \prod_{v\in V(\tau) }\Pr([v]) 
+\end{align*}
+So, to prove the second result in theorem \ref{proper}, we only need to prove that $\Pr(E_2|E_1) = 1$.
+
+To establish a relation in $\tau-$check and $C$, we formalize the random selections. In particular, we define for every $P\in\mathbb{P}$ a sequence $S_P = P_0, P_1, P_2, \ldots P_i \ldots $ and say that envoking a random source for the $i^{th}$ time assigns $P=P_{i-1}$. Also, same set of random sources are used for algorithms \ref{algo} and \ref{check}. Note that once the sources are used for algorithm \ref{algo}, they are all reset before using in \ref{check}, that is, a particular source $S_P$ will output $P_0$ both when it is used for the first time in algorithm \ref{algo} and when it is used for the first time in algorithm \ref{check}. This establishes a relationship between the two random operations and now we will prove that $E_1$ implies $E_2$.
+
+Assuming $E_1$ has happened, that is $\tau = \tau_C(t)$ for some step $t$, to prove that $\tau-$check passes, we need to look at what must have happened while executing a particular iteration of algorithm \ref{algo}. When the algorithm considers a vertex $v$, and takes a random evaluation of $vbl([v])$, for every $P\in vbl([v])$ it must have called upon their respective random sources $S_P$. Taking $ W_v(P):=\{w\in V(\tau)|d(w)>d(v),P\in vbl([w]) \} $ for any random variable $P\in \mathbb{P}$, it can be seen that when $v$ is considered in algorithm \ref{algo}, due to the reverse BFS ordering of the $\tau-$check, the source $S_P$ has already been used \emph{exactly} $|W_v(P)|$ times. This is because no vertex $u$ with $d(u)=d(v) $ can have $[v]\in\Gamma^+(u) $ by theorem \ref{proper}. Thus, $S_P$ will return $P^{|W_v(P)|} $ when $\tau-$check uses $S_P$ while considering vertex $v\in V(\tau)$.
+
+Now we need to decide if $[v]$ is violated when $S_P$ returns $P^{|W_v(P)|} $. Consider algorithm \ref{algo}. In step $q(v)$ algorithm \ref{algo} chooses $[v] $ to resample (By definition of $q(v)$).  Prior to step $q(v)$ $P$ was  reevaluated for all $w : P\in vbl(w) $ and $q(w)<q(v) (\equiv d(w)>d(v))$ and no other vertex. This implies, prior to $q(v)$ $ P $ was reevaluated \emph{exactly}  once $\forall w\in W_v(P)$ and once more at the beginning of algorithm \ref{algo}. Hence, $P$ contained the value $P^{|W_v(P)|} $ . Since there was a need to resample $[v]$ in step $q(v)$, $[v]$ is violated when $P$ is assigned $P^{|W_v(P)} \,\, \forall P\in vbl([v]) $ (the same argument can be applied to all of the random variables $[v]$ depends upon). Therefore, $[v]$ is violated in both algorithm \ref{algo} and \ref{check} and $\Pr(E_2|E_1) = 1 $ and we get the second result in theorem \ref{proper}.
+
+\section{Random Generation of Witness trees}
+Let $\mathcal{T}_A := \{\tau|\tau \text{ is a witness tree rooted at }A\} $. Let us consider two witness trees $\tau_1,\tau_2\in \mathcal{T}_A$ that occur in an execution log $C$. Our claim is that $\tau_1\neq\tau_2$. This is because according to the construction algorithm \ref{construct}, $\tau_1$ and $\tau_2$ must correspond to two distinct steps in the logs say, $t_1$ and  $t_2$ respectively. If $t_1 < t_2$, number of vertices labeled $A$ in $\tau_2$ must be greater than those labeled $A$ in $\tau_1$. Thus, no two witness trees rooted at $A$ can be same.
+
+Let $N_A:=$ the random variable that counts the number of times $A$ appears in the execution log $C$. This basically denotes how many times we had to resample event $A$ in algorithm \ref{algo}. From the above observation, $N_A$ is also equal to the number of witness trees rooted at $A$ that occur in $C$. To prove that the algorithm terminates, it suffices to prove an upper bound on the expected value of $N_A$.
+
+To this end, we define a random process (called Galton-Watson Process) to generate a witness tree rooted at a particular label $A$. Initially, we take our tree to be just the singleton vertex labeled $A$. In each subsequent iteration, we consider each $v\in V(\tau)$ and independently add to $v$ a child labeled $B \in\Gamma^+(v) $ with probability $x(B)$ and exclude $B$ with probability 1- $x(B) $. The process continues till there is an iteration in which no vertex is added to the tree.
+
+\begin{theorem}
+\label{GW}
+ If $x'(B) := x(B)\prod_{C\in\Gamma(B) }(1-x(C)) $, then the probability $p_\tau$ of the Galton-Watson process generating exactly the tree $\tau$ is given by
+\end{theorem}
+\begin{equation}
+ \label{GWeqn}
+ p_\tau  = \frac{1-x(A)}{x(A) }\prod\limits_{v\in V(\tau) }x'([v])
+\end{equation}
+\proof For $v\in V(\tau) $ let $\mathcal{W}_v := \{A\in\Gamma^+([v])|v \text{ does not have a child labeled }A \} $. We can now represent $p_\tau$ as:
+\[
+p_\tau = \prod\limits_{v\in V(\tau)\setminus \{A\} } \left(x([v])\prod\limits_{u\in \mathcal{W}_v }\left(1-x[u]\right) \right)
+\]
+This is because every vertex other than the root $A$ is generated as somebodies child, and for each vertex $v$ that is generated, none of the events in $\mathcal{W}_v $ became the child of $v$. To get rid of $\mathcal{W}_v $, we can replace it by $\Gamma^+([v])$. In doing so, we multiplied the probability by $1-x(B)$ even for those events that were generated. To correct this, we divide by this term for every vertex that is generated. To get:
+\begin{equation*}
+\begin{align}
+  p_\tau & = \prod\limits_{v\in V(\tau)\setminus \{A\} } \left(\frac{x([v])}{1-x([v])} \prod\limits_{u\in \Gamma^+([v]) }\left(1-x[u]\right) \right) \\
+  & = \frac{1-x(A) }{x(A) } \prod\limits_{v\in V(\tau) } \left(\frac{x([v])}{1-x([v])} \prod\limits_{u\in \Gamma^+([v]) }\left(1-x[u]\right) \right)
+\end{align}
+\end{equation*}
+
+
+Replacing $\Gamma^+([v]) $ by $\Gamma([v]) $, we get
+\begin{equation*}
+\begin{align}
+ p_\tau & = \frac{1-x(A) }{x(A) } \prod\limits_{v\in V(\tau) } \left({x([v])} \prod\limits_{u\in \Gamma([v]) }\left(1-x[u]\right) \right) \\
+ & = \frac{1-x(A) }{x(A)} \prod\limits_{v\in V(\tau) } x'([v])
+\end{align} 
+\end{equation*}
+Thus we get equation \ref{GWeqn}.
+
+Now, we have all the theorems and inequalities needed to prove an upper bound on the expected number of times $A\in\mathbb{A}$ is resampled (=$E[N_A]$). We get:
+\[
+ \begin{array}{rcll}
+  E[N_A] & = & \sum\limits_{\tau\in\mathcal{T}_A} \Pr(\tau\text{ appears in the log }C) & \text{From linearity of expectation}\\
+  & \leq & \sum\limits_{\tau\in\mathcal{T}_A}\prod\limits_{v\in V(\tau) } \Pr([v]) & \text{From theorem \ref{proper}} \\
+  & \leq & \sum\limits_{\tau\in\mathcal{T}_A}\prod\limits_{v\in V(\tau) }x'([v]) & \text{From assumption in theorem \ref{lll}} \\
+  & = & \sum\limits_{\tau\in\mathcal{T}_A} \frac{x(A)}{1-x(A) }p_\tau & \text{From equation \ref{GWeqn} in theorem \ref{GW}} \\
+  & = & \frac{x(A)}{1-x(A) } \sum\limits_{\tau\in\mathcal{T}_A}p_\tau & \text{Taking constants with respect to the }\sum \text{ out of the }\sum \\
+  & \leq & \frac{x(A)}{1-x(A) } & \text{Since Galton-Watson process generates exactly one tree at a time. But the process may never terminate}
+ \end{array}
+\]
+

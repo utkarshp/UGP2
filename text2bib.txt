@@ -1,0 +1,7 @@
+
+    Alon, Noga; Spencer, Joel H. (2000). The probabilistic method (2nd ed.). New York: Wiley-Interscience. ISBN 0-471-37046-0.
+    Beck, J. (1991). "An algorithmic approach to the Lovász local lemma, I". Random Structures and Algorithms 2 (4): 343–365. doi:10.1002/rsa.3240020402.
+    Czumaj, Artur; Scheideler, Christian (2000). "Coloring nonuniform hypergraphs: A new algorithmic approach to the general Lovász local lemma". Random Structures & Algorithms 17 (3–4): 213–237. doi:10.1002/1098-2418(200010/12)17:3/4<213::AID-RSA3>3.0.CO;2-Y.
+    Erdős, Paul; Lovász, László (1975). "Problems and results on 3-chromatic hypergraphs and some related questions". In A. Hajnal, R. Rado, and V. T. Sós, eds. Infinite and Finite Sets (to Paul Erdős on his 60th birthday) II. North-Holland. pp. 609–627.
+    Moser, Robin A. (2008). "A constructive proof of the Lovasz Local Lemma". arXiv:0810.4812 [cs.DS].
+

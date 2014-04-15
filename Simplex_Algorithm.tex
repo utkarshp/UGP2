@@ -1,0 +1,62 @@
+
+\section{Introduction}
+Linear programming is concerned with optimizing (minimizing or maximizing) a linear function in, say, $n$ variables subject to, say, $m$ linear inequalities called constraints. There are a number of techniques to solve linear programming problems like simplex algorithms, ellipsoidal method. Simplex algorithm can take exponential time in the worst case, but works better than ellipsoidal method - which is polynomial time algorithm - in practice.
+\section{LP Duality}
+An important feature of an LP problem is the duality. That is, for every minimization problem there is a corresponding maximization problem associated with it and solving any one of them would answer the other. For example, let us take the following problem:
+\[
+\begin{array}{l l c l c l}
+maximize & P  & = & x_1 + 7x_2 - 5x_3 &  & \\
+subject \,\, to & p_1 & = & 5x_1 - x_3  & \leqslant & 24\\
+		 & p_2 &=& 8x_1 + x_2 + 3x_3 & \leqslant & 7 \\
+		 & p_3 &=& -x_1 + x_2 + 2x_3 & \leqslant & 32 \\
+		 & & & x_1,x_2,x_3 & \geqslant & 0
+\end{array} 
+\]
+
+Suppose, we multiply $p_1,p_2,p_3$ by positive $y_1,y_2,y_3$ respectively to get a polynomial $Q'$ such that the coefficients of $x_i$'s in $P$ are less than or equal to those in $Q'$, then $P$ will be bounded by $Q'$ which will in turn be bounded by $Q = 24y_1 + 7y_2 + 32y_3$. Note that, $y_i$'s need to be positive so that the sign of inequality doesn't change while adding. minimizing $Q$ will give the tightest upper bound on $P$ and hence will be the maximum value $P$ can attain. So, we get another optimization problem (minimization this time) which can be described the following polynomials. The constraint inequalities ensure that coefficients of $x_i$'s in $P$ are less than or equal to those in $Q$.
+\[
+\begin{array}{l l c l c l}
+minimize & Q  & = & 24y_1 + 7y_2 + 32y_3 &  & \\
+subject \,\, to & q_1 & = & 5y_1 + 8y_2 - y_3  & \geqslant & 1\\
+		 & q_2 &=& y_2 + y_3 & \geqslant & 7 \\
+		 & q_3 &=& -y_1 + 3y_2 + 2y_3 & \geqslant & -5 \\
+		 & & & y_1,y_2,y_3 & \geqslant & 0
+\end{array} 
+\]
+
+This minimization problem is called the dual of the earlier maximization problem. If the minimum value attained by $Q$ is $r$, then we have:
+\[ P \leqslant Q' \leqslant Q \]
+which holds true for all values of $x_i$'s and $y_i$'s and hence will hold true even for those $y_i$'s for which $Q$ is minimum, i.e.
+\[P \leqslant Q' \leqslant r \]
+Thus the minimum value of $Q$ is the maximum value of $P$. Hence, to solve any linear programming problem, one can also solve it's dual which in turn is another linear programming problem.
+
+\section{Simplex Algorithm}
+The most practically used method to solve a linear programming problem is the simplex algorithm. Simplex algorithm is applied on linear programs in the standard form. In this form, there is an objective function to be minimized, there is a set of equations (and not inequalities) and every variable in the equation is positive. Every linear programming problem can be converted to the standard form.
+
+This algorithm relies on the observation that any extremum of any linear function must lie on at least one vertex of the polyhedron defined by the constraints. The polyhedron will be in $n$ dimensions and will have $m$ surfaces each corresponding one inequality. Also, it will always be a convex polyhedron, i.e. a line joining any two points inside the polyhedron will be entirely enclosed by the polyhedron.
+\subsection{Idea}
+In essence, the algorithm computes the function f, that is to be optimized, at any vertex of the polyhedron. Then checks if it is decreasing along some edge. If yes, it chooses the other vertex at the end of this edge and repeats the procedure until there is no edge along which f increases. If the edge in question doesn't have another vertex, i.e. it is infinite, then f is unbounded below and the problem has no solution. The value of f at this vertex is the answer to the problem. The algorithm will terminate since there can only be finite number of vertices to a polyhedron. It can be proved that if on a vertex, f is not minimum, then there must be at least one edge from that vertex along which f decreases. Thus, the algorithm will give correct answer for any input.
+\subsection{Conversion to standard form}
+First we look at a method to convert any given linear program to the standard form. For any inequality of the form $ s \leqslant a$ we introduce a variable $t \geqslant 0$, and replace the inequality by $s+t = a$. Similarly, $s \geqslant a$ would be replaced by $s-t=a$. Also, for a particular variable $z$ that is unbounded, we take two variables $x, y$ such that $x\geqslant 0, y \geqslant 0$ and substitute $z$ by $x-y$. Thus, any given linear program can be converted to its standard form.
+\subsection{Applying the simplex algorithm}
+Given a linear program in the standard form:
+\[
+\begin{array}{l l c l c l}
+minimize & c^Tx & &  \\
+subject \,\, to & Ax & = & b \\
+& x_i & \geqslant & 0 \quad \forall i \in [1,n]
+\end{array} 
+\]
+where $c = (c_1,c_2,\ldots c_n)$ is a column vector with coefficients of variables $x_i$ in the objective function, $x=(x_1,x_2,\ldots,x_n)$ is the column vector of variables, $A$ and $b$ are matrix and vector representing the constraint equations in the linear program respectively. To solve the linear program, we need a way to find the value of objective function at the vertices of the polyhedron (polytope for higher dimensions) defined by the constraint equations. For that, we need a way to identify vertices of the polytope.
+
+Looking at the matrix as a combination of column vectors, it can be observed that $A_1x_1 + A_2x_2 + A_3x_3 + \ldots + A_nx_n = b$ where $A_i$ is $i^{th}$ column of $A$. If $x=\alpha$ is a solution to this problem, and say, $\alpha_i \neq 0 \quad \forall i \in [1,n]$, then $\{A_i | i \in [1,n]\}$ is a linearly independent set. Because if it weren't and, say, $A_n$ was a linear combination of the others, then we would surely find many more points satisfying the same equation as a result of more degrees of freedom. If some $\alpha_i$ were to be 0, the same can be said about other $A_i$'s for which $\alpha_i$'s aren't 0.
+
+By using Graham-Schimdt orthonormalization method, we can obtain a set of orthogonal unit column vectors which are a linear combinations of the original column vectors. This can be used to find out a set of $n$ linearly independent vectors. If there is no such set, then there is no vertex to the polytope and hence, no solution to the problem. Solving this set by gaussian elimination (By converting the matrix to identity matrix by row operations) method will give us a vertex on the polytope.
+
+Now, we need a method to traverse an edge of the polytope that starts from this vertex. To do this, we first distinguish between variables that were 0 in the first vertex from those that weren't.After the gaussian elimination applied above, some variables were being multiplied by columns of identity matrix. Let's call these variables ``basic variables" and others ``non-basic variables". If we convert a non-basic variable to basic and a non-basic to basic, we will get another set of linearly independent vectors and thus another vertex of the polytope. This can be done simply by choosing a non-basic column $i$ and converting it to $I_r$ that is, the $r^{th}$ column of the identity matrix by row operations. This process will change the $r^{th}$ column of previous identity matrix which can thus be made non-basic for next iteration. Thus, we get to an adjacent vertex of the polytope.
+
+To identify whether we got to an optimal solution or not, we need a way to check if the objective function will decrease or increase on swapping a pair of basic and non-basic variables. This can be done by looking at the coefficients of the corresponding variables. If the coefficient of some non-basic variable in the objective function is negative, this variable should be chosen as the ``Entering variable". Once the entering variable is chosen, the ``leaving variable" can be chosen by the requirement that the resulting solution be feasible.
+
+It must be noted that the algorithm terminates if there is no choice for entering variable. In this case, the solution at hand is the optimal solution. Also, $r$ is chosen such that $r^{th}$ entry in $A_i$ is positive. If there are no positive entries, then any value assigned to the entering variable will be feasible and it will obviously decrease the objective function (since the coefficient was negative for the entering variable). Thus, in this case there is no lower bound for the objective function. 
+
+If there are multiple possible choices for the entering and/or leaving variable, any one of them can be chosen. Though, there are some methods that optimize the running time by narrowing down the choices, the worst case running time could still be exponential.

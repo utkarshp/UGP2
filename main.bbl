@@ -1,0 +1,37 @@
+\begin{thebibliography}{LMR94}
+
+\bibitem[AS00]{assym}
+Naga Alon and Joel~H. Spencer.
+\newblock {\em The probabilistic method}.
+\newblock Wiley-Interscience, New York, 2000.
+
+\bibitem[LE75]{original}
+Laszlo Lovasz and Paul Erdos.
+\newblock Problems and results on 3-chromatic hypergraphs and some related
+  questions.
+\newblock Number v. 2 in Colloquia mathematica Societatis J{\'a}nos Bolyai,
+  pages 609--627. North Holland, April 1975.
+
+\bibitem[LMR94]{jobshop}
+Frank~Thomson Leighton, Bruce~M. Maggs, and Satish Rao.
+\newblock Packet routing and job-shop scheduling in {O}(congestion + dilation)
+  steps.
+\newblock {\em Combinatorica}, 14(2):167--186, 1994.
+
+\bibitem[MR97]{random}
+Rajeev Motwani and Prabhakar Raghavan.
+\newblock Randomized algorithms.
+\newblock In Allen~B. Tucker, editor, {\em The Computer Science and Engineering
+  Handbook}, pages 141--161. CRC Press, 1997.
+
+\bibitem[MT10]{constructive}
+Robin~A. Moser and G{\'a}bor Tardos.
+\newblock A constructive proof of the general lov{\'a}sz local lemma.
+\newblock {\em J. ACM}, 57(2), 2010.
+
+\bibitem[Sri99]{srinivasan}
+A~Srinivasan.
+\newblock Approximation algorithms via randomized rounding: a survey.
+\newblock pages 9--71, 1999.
+
+\end{thebibliography}

@@ -1,0 +1,37 @@
+\documentclass[a4paper,10pt]{report}
+\author{Utkarsh Patange 11493}
+\title{Randomized Rounding}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[lined,boxed,linesnumbered]{algorithm2e}
+\usepackage{algorithmicx}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+
+
+\begin{document}
+\maketitle
+\chapter{Linear Programming}
+\input{./Simplex_Algorithm.tex}
+\chapter{Randomized Rounding problems}
+\input{./Randomized_Rounding_problems.tex}
+\chapter{Lovasz Local Lemma: Proof and Applications}
+\input{./LLL_constructive.tex}
+
+\bibliographystyle{alpha} 
+\bibliography{refer.bib}
+
+\end{document}
