@@ -6,7 +6,7 @@ Naga Alon and Joel~H. Spencer.
 \newblock Wiley-Interscience, New York, 2000.
 
 \bibitem[LE75]{original}
-Laszlo Lovasz and Paul Erdos.
+L\'aszl\'o Lov\'asz and Paul Erd\"os.
 \newblock Problems and results on 3-chromatic hypergraphs and some related
   questions.
 \newblock Number v. 2 in Colloquia mathematica Societatis J{\'a}nos Bolyai,
@@ -29,9 +29,19 @@ Robin~A. Moser and G{\'a}bor Tardos.
 \newblock A constructive proof of the general lov{\'a}sz local lemma.
 \newblock {\em J. ACM}, 57(2), 2010.
 
+\bibitem[Mur83]{linear}
+Katta Murty.
+\newblock {\em Linear programming}.
+\newblock Wiley, New York, 1983.
+
 \bibitem[Sri99]{srinivasan}
 A~Srinivasan.
 \newblock Approximation algorithms via randomized rounding: a survey.
 \newblock pages 9--71, 1999.
+
+\bibitem[SSW94]{shopadvance}
+David~B. Shmoys, Clifford Stein, and Joel Wein.
+\newblock Improved approximation algorithms for shop scheduling problems.
+\newblock {\em SIAM J. Comput.}, 23(3):617--632, 1994.
 
 \end{thebibliography}

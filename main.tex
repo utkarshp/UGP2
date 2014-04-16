@@ -1,6 +1,5 @@
 \documentclass[a4paper,10pt]{report}
-\author{Utkarsh Patange 11493}
-\title{Randomized Rounding}
+
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
@@ -11,7 +10,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
-
+\let\endtitlepage\relax
 
 \newenvironment{definition}[1][Definition]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
@@ -19,12 +18,18 @@
 \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 \newenvironment{remark}[1][Remark]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 
 \begin{document}
-\maketitle
+\input{./title.tex}
 \tableofcontents
+\begin{abstract}
+ Approximation algorithms provide a novel way to solve otherwise intractable problems, e.g. problems those are NP-hard. Due to the growing belief that $P\neq NP$ and the need to solve many $NP$ hard problems, approximation algorithms are fast gaining importance. One way to obtain such algorithms is to solve a relaxed version of the problem, one that can be solved efficiently, and then randomly rounding its solution to obtain the solution to the original problem. We look at problems that can be solved using linear programming first, and then look at a very powerful tool - Lov\'asz Local Lemma - that has many applications in proving bounds on the approximation ratio/running time of various algorithms.
+\end{abstract}
+\section{Introduction}
+It is well known that many optimization problems are intractable, i.e. they are $NP$ hard. Such problems still needs to be solved efficiently. Due to there being no solution for finding their exact solution (there is no solution to such problems unless $P=NP$, which is not believed to be trued), we turn to designing algorithms that will provide us with some approximate solutions. The aim here is to find algorithms that will always give an output which is $proven$ to be appropriately close to the actual optimum solution of the problem. In chapter 1, we look at linear programming problems, which we will later use in chapter 2 to find randomized rounding algorithms that will give an approximate solution to some problems. After that, in chapter 3 we will state and prove the general Lov\'asz local lemma. We will present its two proofs: a non-constructive (existential) proof that appeared in \cite{original},\cite{assym} and a constructive proof that later appeared in \cite{constructive}. In chapter 4, we discuss an application of the local lemma.
+
 \chapter{Linear Programming}
 \input{./Simplex_Algorithm.tex}
 \chapter{Randomized Rounding problems}
@@ -33,6 +38,10 @@
 \input{./LLL_constructive.tex}
 \chapter{Lovasz Local Lemma: Applications}
 \input{./LLL_application.tex}
+\chapter{Conclusion}
+We first studied the basics of linear programming. Then we saw various approximation algorithms most of which were solved using linear programming. We even saw one problem that gave the exact optimum solution after randomized rounding as opposed to two others wherein we had a proven guarantee on the ratio of the actual solution and the output given by the approximation algorithm. 
+
+In the last two chapters, we focused mainly on a tool called Lov\'asz local lemma. We saw in detail how a problem of packet routing can be solved using the local lemma. First we only proved that a very close to optimum schedule of packets exists, but later, due to the constructive proof of the lemma (that appeared in \cite{constructive}), we were also able to give a randomized algorithm that could compute such a schedule efficiently.
 \bibliographystyle{alpha} 
 \bibliography{refer.bib}
 

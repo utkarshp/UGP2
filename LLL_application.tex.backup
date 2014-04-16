@@ -15,27 +15,67 @@ Note that we can also have an upper bound on the optimum schedule. we mean that 
 \subsection{Randomized Schedule}
 We will first produce a random schedule and then derandomize it to prove that there exists a schedule that takes $O(c+d)$ time. Let us pick a suitable number $a$, we will fix $a$ later. For every packet introduce a random delay $d_i\in\{0,1,2,\ldots ac\} $. Every packet is now scheduled to leave its source after a delay $d_i$ and then it proceeds to follow its prescribed path to reach the target without stopping anywhere. Of course this schedule may be invalid, that is, there might be some edge having more than one packet traversing it at some point of time. We need to change the schedule to suit these edges.
 
-For this we need to split the current schedule in different time frames. Note that this (possibly invalid) schedule takes time at most $ac+d$ units. We will divide this schedule in contiguous time frames of length $b\log c$ each starting at time 1. Our motive is to prove, using the LLL, that every edge has a congestion of at most $b\log c$ in every time frame with positive probability (i.e. such assignment of random delays exists). If this is true, then we have essentially broken the main problem down to $\frac{ac+d}{b\log c} $ subproblems. We can then proceed to solve each of these subproblems, one corresponding to each frame, and then string their solutions together to get the schedule for the original problem. Clearly, the dilation in each frame-subproblem becomes $b\log c$ and so we have (for cleaner notation, we assume that $c=d$.) :
+For this we need to split the current schedule in different time frames. Note that this (possibly invalid) schedule takes time at most $ac+d$ units. We will divide this schedule in contiguous time frames of length $b\log c$ each starting at time 1, again for a suitable $b$. Our motive is to prove, using the LLL, that every edge has a congestion of at most $b\log c$ in every time frame with positive probability (i.e. such assignment of random delays exists). If this is true, then we have essentially broken the main problem down to $\frac{ac+d}{b\log c} $ subproblems. We can then proceed to solve each of these subproblems, one corresponding to each frame, and then string their solutions together to get the schedule for the original problem. Clearly, the dilation in each frame-subproblem becomes $b\log c$ and so we have (for cleaner notation, we assume that $c=d$.) :
 \begin{itemize}
  \item $T(c) = \frac{ac}{b\log c}T(b\log c) $ where $T(c)$ denotes the makespan of the optimum schedule having congestion = dilation = $c$
  \item $T(k) = k^2 $ where $k$ is a constant. This is from the greedy brute force schedule that always exists.
 \end{itemize}
-Solving the above recurrence, we get $T(c)= c\cdot 2^{O(\log^*(c)) } $. It is a known fact that $\log^*x \leq 6$ for all practical purposes and so we get a schedule of desired length.
+Solving the above recurrence, we get $T(c)= \frac{c}{b}\cdot a^{O(\log^*(c)) } $. It is a known fact that $\log^*x \leq 6$ for all practical purposes and so we get a schedule of desired length.
 
 Now all we need to do is to prove using lovasz local lemma that there exists such an assignment of random delays to the packets so that in all of the frames, the congestion on any edge is $O(b\log c) $.
 
 \subsection{Applying LLL}
-To apply the lovasz local lemma, we need to define some undesirable events in which dependency of every event on other events is bounded. The natural choice of undesirable events here is to have a set of events $E_e$ for a frame $e$ denoting that there is some frame having congestion more than $b\log c$ on edge $e$. We need to analyze the probability $\Pr(\cap_{e} \overline{E_e}) $ and prove that it is positive.
+To apply the lovasz local lemma, we need to define some undesirable events in which dependency of every event on other events is bounded. The natural choice of undesirable events here is to have a set of events $E_e$ for a frame $e$ denoting that there is some frame having congestion more than $b\log c$ \emph{due to} edge $e$, that is $e$ is the edge used by more than $b\log c$ packets in some frame. We need to analyze the probability $\Pr(\cap_{e} \overline{E_e}) $ and prove that it is positive.
 
-For any edge $e$ in a frame $F$, let $E'(e,F) $ be the event that the edge $e$ has a congestion $\geq b\log c $ in frame $F$. It can be seen that the random variable $C(e,F) $ counting the number of packets passing through of edge $e$ in frame $F$ has an expected value $E[C(e,F)]\leq c/ac $. If a packet traverses an edge $e$ in a particular frame $F$, it can never traverse the same edge twice. This is because of our assumption that paths are edge simple. Due to this observation, we can express $C(e,F) $ as a sum of indicator random variables each corresponding to a different packet indicating whether or not that packet traverses $e$ in frame $F$. Hence we can apply chernoff bound and union bound to get:
+For any edge $e$ in a frame $F$, let $E'(e,F) $ be the event that the edge $e$ has a congestion $\geq b\log c $ in frame $F$. It can be seen that the random variable $C(e,F) $ counting the number of packets passing through an edge $e$ in frame $F$ has an expected value $E[C(e,F)]\leq (b\log c)\times c/ac = (b\log c)/a $ (Since a frame has length $b\log c$). If a packet traverses an edge $e$ in a particular frame $F$, it can never traverse the same edge twice. This is because of our assumption that paths are edge simple. Due to this observation, we can express $C(e,F) $ as a sum of indicator random variables each corresponding to a different packet indicating whether or not that packet traverses $e$ in frame $F$. Hence we can apply Chernoff bound and union bound to get:
 
 \begin{equation*}
 \begin{align}
- \Pr[E_e] \leq \sum_F \Pr(E'(e,F)) &= \sum_F\Pr\left(C(e,F) \geq b\log c\times \frac{1}{a} \right)\\
- & \leq \frac{ac+d}{b\log c} \frac{e^{\frac{b\log \frac{c}{e}}{a} } }{b\log c^{\frac{b\log c}{a} }} \\
+ \Pr[E_e] \leq \sum_F \Pr(E'(e,F)) &= \sum_F\Pr\left(C(e,F) \geq a\times \frac{b\log c}{a} \right)\\
+ & \leq \frac{ac+d}{b\log c} \times \frac{e^{\frac{(a-1)b\log c}{a} } }{a^{b\log c} } \\
+ & \leq \left(\frac{e}{a}\right)^{b\log c} = c^{-b\log(a/e)}
 \end{align}
 \end{equation*}
 
+By choosing $a$ and $b$ as we please, we can make the bound arbitrarily small inverse polynomial in $c$. Now we analyze the dependency among various events $E_e$.  Note that to apply the lovasz local lemma, all we need to do now is to bound the number of events $E_e$ for any edge $e$ is dependent upon. Number of packets using an edge $e$ in any frame will depend upon number of packets using another edge $f$ only if \emph{both} of these edges are in the path of \emph{some} packet. Thus, $E_e$ is dependent upon a maximum of $cd$  other events.
+
+Finally to successfully apply the lovasz local lemma, we need to find a mapping $x$ from our set of events to $(0,1)$ that satisfy the conditions required for theorem \ref{lll}. Suppose we take $\forall e\,\, x(E_e) = \frac{1}{1+cd} $ (this is the same reduction to convert an asymmetric form of lll to the symmetric form as per \cite{assym}). We need to choose $a$ and $b$ such that:
+\begin{equation*}
+ \begin{align}
+  \Pr[E_e] & \leq \frac{(cd)^{cd}}{(1+cd)^{1+cd} } = \frac{1}{1+cd}\times \left(1-\frac{1}{1+cd} \right)^{cd} \\
+  & \leq \frac{1}{1+cd} \times \frac{1}{e}
+ \end{align}
+\end{equation*}
+
+So, we need to pick $a$ and $b$ such that
+\begin{equation*}
+ \begin{align}
+  c^{-b\log(\frac{a}{e})} & \leq \frac{1}{e(1+cd)} \\
+  \log c \times b\log\frac{a}{e} & \geq \log (e(1+cd)) \\
+ \end{align}
+\end{equation*}
+Thus it is possible to choose $a = e^2(1+cd) $ and $b\geq \frac{1}{\log c} $ so that it is possible to apply the lovasz local lemma. Note here that our choice of $a$ and $b$ also affect the length of the schedule we get. The expression for which came out to be $\frac{c}{b}\cdot a^{O(\log^*(c)) }$. Since after fixing $a$, we can choose $b$ as large as we please, we can take $b = \max\left(a^{O(\log^*(c))},\frac{1}{\log c}\right) $ so that we still get an $O(c+d)$ length schedule.
+
+\section{Job Shop Scheduling}
+While scheduling jobs on computers, it might so happen that a particular job requires that it be scheduled in a specific order on different machines. Say first on a Supercomputer, then on a computer running x86 architecture, then on a computer that has a very old version of some operating system and so on. If there are multiple such jobs that need to be executed in such a way, we need to schedule them so as to minimize the total time required (or some other parameter depending upon the resources available. Here we will focus on minimizing the total time required to finish all of the jobs). This problem is analyzed in the survey \cite{srinivasan}.
+
+\subsection{Problem Statement}
+Given a set of $n$ jobs $J_1,J_2,\ldots,J_n $ on $m$ machines numbered 1 through $m$, and for each job, a sequence of operations where each operation $O_{J_ij} $ is a tuple $(i,t_{ij})$ which denotes that this operation must be carried out on machine $i$ for an uninterrupted \emph{integral} amount of time $t_{ij}$. We need to schedule all of the jobs in such a way that:
+\begin{itemize}
+ \item Every operation of every job is finished
+ \item No machine runs more than one operation at any point of time
+ \item Every job must be executed in the prescribed sequence of its operations on given machines
+\end{itemize}
+
+Subject to the above conditions, we need to minimize the total time required to finish all of the jobs. Here we will only consider the case where the jobs given are \emph{acyclic}. That is, one job never has to be processed on the same machine more than once. Also, we will assume that all of the operations take same amount of time.
+
+\subsection{Similarity with Packet Routing}
+On closer inspection, this problem is quite similar to packet routing. The jobs correspond to the packets we had to take from source to destination. The particular sequence of operations corresponds to the prescribed paths in packet routing problem. The intermediate state of the jobs wherein the job has completed some of its operations and needs to wait for the next machine to be idle to go further corresponds to the nodes in the network. The constraints are also the same after this mapping. Also note that here we are considering $acyclic$ instance of the problem and in case of packet routing as well, we had considered only the case where paths were edge-simple.
+
+We have also assumed that the length of times of all operations are the same, thus we can scale down this instance to another instance wherein each operation takes unit time and convert this problem to an instance of the general packet routing problem to get a schedule of length $O(c+d)$ where $c,d$ are defined in the packet routing problem. After restoring the solution to its original length, we get a schedule of length $\alpha O(c+d)$ where $\alpha$ is the scaling factor we used.
+
+\subsection{Slacking some conditions}
+The usage of the lll for this problem ends here. By using some different methods, we can get a good approximate solution for the case where the operations are not necessarily of the same length. 
 
 
 

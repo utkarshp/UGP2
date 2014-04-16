@@ -1,3 +1,4 @@
+\contentsline {section}{\numberline {0.1}Introduction}{1}
 \contentsline {chapter}{\numberline {1}Linear Programming}{2}
 \contentsline {section}{\numberline {1.1}Introduction}{2}
 \contentsline {section}{\numberline {1.2}LP Duality}{2}
@@ -30,3 +31,9 @@
 \contentsline {subsection}{\numberline {4.1.1}Problem Statement}{19}
 \contentsline {subsection}{\numberline {4.1.2}Randomized Schedule}{20}
 \contentsline {subsection}{\numberline {4.1.3}Applying LLL}{20}
+\contentsline {subsection}{\numberline {4.1.4}Constructive vs non-constructive proof}{22}
+\contentsline {section}{\numberline {4.2}Job Shop Scheduling}{22}
+\contentsline {subsection}{\numberline {4.2.1}Problem Statement}{22}
+\contentsline {subsection}{\numberline {4.2.2}Similarity with Packet Routing}{22}
+\contentsline {subsection}{\numberline {4.2.3}Further Advances}{23}
+\contentsline {chapter}{\numberline {5}Conclusion}{24}

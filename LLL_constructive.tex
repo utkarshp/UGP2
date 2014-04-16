@@ -2,7 +2,7 @@
 
 
 \section{Lemma statement}
-The asymmetric lovasz local lemma \cite{original} states the following:
+The asymmetric Lov\'asz local lemma \cite{original} states the following:
 \begin{theorem}
 \label{lll}
  Let $\mathbb{A}$ be a finite set of events in a probability space. For $A\in \mathbb{A}$ let $\Gamma(A)\subset \mathbb{A} $ such that $A$ is independent from the collection of events $A\setminus (\{A\}\cup\Gamma(A) ) $. If $\exists x:\mathbb{A} \longrightarrow (0,1): $
@@ -17,7 +17,7 @@ The asymmetric lovasz local lemma \cite{original} states the following:
 \end{theorem}
 First we study the non-constructive proof of theorem \ref{lll} given in \cite{assym}
 
-\section[Non-constructive Proof]{Non-constructive Proof\footnote{The same proof has been added by me in the wikipedia article of Lovasz Local Lemma (\text{https://en.wikipedia.org/wiki/Lovasz\_Local\_Lemma}) under the username Uspatange on $31^{st}$ March 2014 }}
+\section[Non-constructive Proof]{Non-constructive Proof\footnote{The same proof has been added by me in the wikipedia article of Lov\'asz Local Lemma (\text{https://en.wikipedia.org/wiki/Lov\'asz\_Local\_Lemma}) under the username Uspatange on $31^{st}$ March 2014 }}
 We prove the asymmetric version of the Lemma. By using the principle of mathematical induction we prove that $ \Pr\left(A|\cap_{B \in S}\overline{B}\right)\leq x\left(A\right) \forall S \subset \mathcal{A}, A \not\in S $. The induction here is applied on the size (cardinality) of the set $ S $. For base case $S=\phi$ the statement obviously holds since $ \Pr\left(A_i\right) \leq x\left(A_i\right) $. We need to show that the inequality holds for any subset of $\mathcal{A} $ of a certain cardinality given that it holds for all subsets of a lower cardinality.
 
 Let $S_{1} = S\cap \Gamma(A), S_{2} = {{S \smallsetminus S_{1}}}$. We have from Bayes' theorem
@@ -65,7 +65,7 @@ Which is what we had intended to prove.
 The proof stated above doesn't give a way to find such a setting in which none of the undesirable events happen. Now
 we study a constructive proof for theorem \ref{lll} given in \cite{constructive}. The proof given here asumes certain things about the nature of the events and gives a randomized algorithm with an expected bound on the running time that gives a way to find such a setting.
 \section{Assumptions and Terms Used}
-To get an algorithmic access to the problem, we assume that all the events can be determined by some subset of a finite collection of mutually independent random variables in a fixed probability space. This indeed is the case in almost all known applications of the Lovasz Local Lemma.
+To get an algorithmic access to the problem, we assume that all the events can be determined by some subset of a finite collection of mutually independent random variables in a fixed probability space. This indeed is the case in almost all known applications of the Lov\'asz Local Lemma.
 
 Terms used:
 \begin{enumerate} \itemsep -2pt
@@ -182,6 +182,8 @@ Let $\mathcal{T}_A := \{\tau|\tau \text{ is a witness tree rooted at }A\} $. Let
 
 Let $N_A:=$ the random variable that counts the number of times $A$ appears in the execution log $C$. This basically denotes how many times we had to resample event $A$ in algorithm \ref{algo}. From the above observation, $N_A$ is also equal to the number of witness trees rooted at $A$ that occur in $C$. To prove that the algorithm terminates, it suffices to prove an upper bound on the expected value of $N_A$.
 
+From theorem \ref{proper} and linearity of expectation, we already have an inequality for the expected value of $N_A$, viz. $E(N_A) = \sum\limits_{\tau\in\mathcal{T}_A} \Pr(\tau\text{ appears in the log }C) \leq \sum\limits_{\tau\in\mathcal{T}_A }\prod\limits_{v\in V(\tau)}\Pr([v]) $. But we have now way whatsoever to find this sum. Our approach from now onwards will be to determine the term under the $\prod$ sign. Note that we already have a bound for this term due to the assumption in theorem \ref{lll}. We will now show that this term also equals \emph{probability} of some event and then using these two equations determine the sum.
+
 To this end, we define a random process (called Galton-Watson Process) to generate a witness tree rooted at a particular label $A$. Initially, we take our tree to be just the singleton vertex labeled $A$. In each subsequent iteration, we consider each $v\in V(\tau)$ and independently add to $v$ a child labeled $B \in\Gamma^+(v) $ with probability $x(B)$ and exclude $B$ with probability 1- $x(B) $. The process continues till there is an iteration in which no vertex is added to the tree.
 
 \begin{theorem}
@@ -228,4 +230,4 @@ Now, we have all the theorems and inequalities needed to prove an upper bound on
  \end{array}
 \]
 
-Thus every event is resampled at most an expected $\frac{x(A)}{1-x(A) } $ number of times in algorithm \ref{algo}. This concludes our constructive proof of the lovasz local lemma.
+Thus every event is resampled at most an expected $\frac{x(A)}{1-x(A) } $ number of times in algorithm \ref{algo}. This concludes our constructive proof of the Lov\'asz local lemma.

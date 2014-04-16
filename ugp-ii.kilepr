@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=LLL_application.tex
+lastDocument=Simplex_Algorithm.tex
 masterDocument=
 name=UGP-II
 pkg_extIsRegExp=false
@@ -58,22 +58,29 @@ Highlighting=BibTeX
 Indentation Mode=normal
 Mode=BibTeX
 
+[document-settings,item:title.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
 [item:LLL_application.tex]
 archive=true
-column=53
+column=146
 encoding=UTF-8
 highlight=LaTeX
-line=34
+line=89
 mode=LaTeX
 open=true
 order=1
 
 [item:LLL_constructive.tex]
 archive=true
-column=0
+column=641
 encoding=UTF-8
 highlight=LaTeX
-line=228
+line=184
 mode=LaTeX
 open=true
 order=0
@@ -90,10 +97,10 @@ order=3
 
 [item:Simplex_Algorithm.tex]
 archive=true
-column=196
+column=430
 encoding=UTF-8
 highlight=LaTeX
-line=53
+line=2
 mode=LaTeX
 open=true
 order=5
@@ -103,32 +110,42 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=43
 mode=LaTeX
 open=true
 order=2
 
 [item:refer.bib]
 archive=true
-column=56
+column=12
 encoding=UTF-8
 highlight=BibTeX
-line=82
+line=19
 mode=BibTeX
 open=true
 order=4
 
+[item:title.tex]
+archive=true
+column=20
+encoding=UTF-8
+highlight=LaTeX
+line=28
+mode=LaTeX
+open=true
+order=6
+
 [view-settings,view=0,item:LLL_application.tex]
-CursorColumn=53
-CursorLine=34
+CursorColumn=146
+CursorLine=89
 JumpList=
-ViMarks=.,35,0,[,35,0,],35,0
+ViMarks=.,93,256,[,93,256,],93,263
 
 [view-settings,view=0,item:LLL_constructive.tex]
-CursorColumn=0
-CursorLine=228
+CursorColumn=641
+CursorLine=184
 JumpList=
-ViMarks=.,230,178,[,230,160,],230,178
+ViMarks=.,67,266,[,67,266,],67,273
 
 [view-settings,view=0,item:Randomized_Rounding_problems.tex]
 CursorColumn=0
@@ -137,19 +154,25 @@ JumpList=
 ViMarks=.,112,245,[,112,243,],112,245
 
 [view-settings,view=0,item:Simplex_Algorithm.tex]
-CursorColumn=196
-CursorLine=53
+CursorColumn=430
+CursorLine=2
 JumpList=
-ViMarks=.,57,454,[,57,452,],57,454
+ViMarks=.,2,429,[,2,408,],2,429
 
 [view-settings,view=0,item:main.tex]
 CursorColumn=0
-CursorLine=0
+CursorLine=43
 JumpList=
-ViMarks=.,26,0,[,26,0,],26,15
+ViMarks=.,42,0,[,42,0,],-1,-1
 
 [view-settings,view=0,item:refer.bib]
-CursorColumn=56
-CursorLine=82
+CursorColumn=12
+CursorLine=19
 JumpList=
-ViMarks=.,82,55,[,82,55,],82,55
+ViMarks=.,19,11,[,19,6,],19,11
+
+[view-settings,view=0,item:title.tex]
+CursorColumn=20
+CursorLine=28
+JumpList=
+ViMarks=.,28,19,[,28,19,],28,19

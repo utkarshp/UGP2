@@ -182,6 +182,8 @@ Let $\mathcal{T}_A := \{\tau|\tau \text{ is a witness tree rooted at }A\} $. Let
 
 Let $N_A:=$ the random variable that counts the number of times $A$ appears in the execution log $C$. This basically denotes how many times we had to resample event $A$ in algorithm \ref{algo}. From the above observation, $N_A$ is also equal to the number of witness trees rooted at $A$ that occur in $C$. To prove that the algorithm terminates, it suffices to prove an upper bound on the expected value of $N_A$.
 
+
+
 To this end, we define a random process (called Galton-Watson Process) to generate a witness tree rooted at a particular label $A$. Initially, we take our tree to be just the singleton vertex labeled $A$. In each subsequent iteration, we consider each $v\in V(\tau)$ and independently add to $v$ a child labeled $B \in\Gamma^+(v) $ with probability $x(B)$ and exclude $B$ with probability 1- $x(B) $. The process continues till there is an iteration in which no vertex is added to the tree.
 
 \begin{theorem}
@@ -221,8 +223,11 @@ Now, we have all the theorems and inequalities needed to prove an upper bound on
   & \leq & \sum\limits_{\tau\in\mathcal{T}_A}\prod\limits_{v\in V(\tau) } \Pr([v]) & \text{From theorem \ref{proper}} \\
   & \leq & \sum\limits_{\tau\in\mathcal{T}_A}\prod\limits_{v\in V(\tau) }x'([v]) & \text{From assumption in theorem \ref{lll}} \\
   & = & \sum\limits_{\tau\in\mathcal{T}_A} \frac{x(A)}{1-x(A) }p_\tau & \text{From equation \ref{GWeqn} in theorem \ref{GW}} \\
-  & = & \frac{x(A)}{1-x(A) } \sum\limits_{\tau\in\mathcal{T}_A}p_\tau & \text{Taking constants with respect to the }\sum \text{ out of the }\sum \\
-  & \leq & \frac{x(A)}{1-x(A) } & \text{Since Galton-Watson process generates exactly one tree at a time. But the process may never terminate}
+  & = & \frac{x(A)}{1-x(A) } \sum\limits_{\tau\in\mathcal{T}_A}p_\tau & \frac{x(A)}{1-x(A)} \text{ can be taken out of the sum} \\
+  & \leq & \frac{x(A)}{1-x(A) } & \text{Since Galton-Watson process generates exactly}\\
+  & & & \text{one tree at a time. But the process may never terminate}\\
+  & & & \text{Which is the reason for the inequality}
  \end{array}
 \]
 
+Thus every event is resampled at most an expected $\frac{x(A)}{1-x(A) } $ number of times in algorithm \ref{algo}. This concludes our constructive proof of the lovasz local lemma.

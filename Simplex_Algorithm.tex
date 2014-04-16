@@ -1,6 +1,8 @@
 
 \section{Introduction}
-Linear programming is concerned with optimizing (minimizing or maximizing) a linear function in, say, $n$ variables subject to, say, $m$ linear inequalities called constraints. There are a number of techniques to solve linear programming problems like simplex algorithms, ellipsoidal method. Simplex algorithm can take exponential time in the worst case, but works better than ellipsoidal method - which is polynomial time algorithm - in practice.
+Linear programming is concerned with optimizing (minimizing or maximizing) a linear function in, say, $n$ variables subject to, say, $m$ linear inequalities called constraints. There are a number of techniques to solve linear programming problems like simplex algorithms, ellipsoidal method. Simplex algorithm can take exponential time in the worst case, but works better than ellipsoidal method (studied by Leonid Khachiyan, 1979) - which is polynomial time algorithm - in practice.
+
+The material presented here was taken from Wikipedia, which in turn had taken it from \cite{linear}.
 \section{LP Duality}
 An important feature of an LP problem is the duality. That is, for every minimization problem there is a corresponding maximization problem associated with it and solving any one of them would answer the other. For example, let us take the following problem:
 \[
